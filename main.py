@@ -7,22 +7,29 @@ def perm(s):
     from itertools import permutations
     return set(filter(lambda e: s.replace('-','') == ''.join(map(str,e)).replace('-',''), permutations(s)))
 
-def align(e, s):
-    n1 = len(e); n2 = len(s)
+def order(x,y):
+    n1 = len(x); n2 = len(y)
     n = min(n1, n2); N = max(n1,n2)
-    (x,y) = (e, s + '-'*(N-n)) if n1 >= n2 else (s, e + '-'*(N-n))
+    return (x, y + '-'*(N-n)) if n1 >= n2 else (y, x + '-'*(N-n))
+
+def align(e, s):
+    (x,y) = order(e,s)
     f = lambda x,y: sum(map(lambda i,j: int(M[i][j]), idx(x), idx(y)))
     if(d==True):
-        print('\n'.join(map(lambda s: str(e) + '/' + str(s) + ' -> '+ str(f(e,s)), map(lambda t: ''.join(c for c in t), perm(y)))))
+        dfmt = lambda s: str(e) + '/' + str(s) + ' -> '+ str(f(e,s))
+        tuptosrt = lambda t: ''.join(c for c in t)
+        print('\n'.join(map(dfmt, map(tuptosrt, perm(y)))))
     return (e,s,max(map(lambda s: f(x,s), perm(y))))
 
 def parsef(fname):
     M = [None, None, None, None, None]; suspects = {}; evidence = None
-    lines = filter(lambda l: not(l.startswith('#')) , map(lambda s: s.strip(), open(fname).readlines()))
-    for l in lines:
+    for l in open(fname).readlines():
+        l = l.strip()
+        if(l.startswith('#')):
+            continue
         (id, rest) = l.split(":")
         if(id in ['A', 'C', 'G', 'T', '-']):
-            M[mi[id]] = map(lambda x: x, rest.split(','))            
+            M[mi[id]] = map(lambda x: x, rest.split(','))   
         elif(id == '0'):
             evidence = rest
         else:
@@ -34,7 +41,7 @@ import sys
 (M, evidence, suspects) = parsef(sys.argv[1])
 d = False if len(sys.argv) < 3 else True
 maxv = -float('Inf'); index = 0; adn = None
-for key, suspect in iter(sorted(suspects.iteritems())):
+for key, suspect in sorted(suspects.iteritems()):
     aux = align(evidence, suspect)
     if(aux[2]>maxv):
         index = key
@@ -43,4 +50,3 @@ for key, suspect in iter(sorted(suspects.iteritems())):
     if(d==True):
         print(aux)
 print("El culpable es el sospechoso numero %s (%s)" % (index, adn))
-
