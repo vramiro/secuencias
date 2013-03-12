@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-mi = {'A':0, 'C':1, 'G': 2,'T':3, '-': 4}
+mi = {'A': 0, 'C': 1, 'G': 2,'T': 3, '-': 4}
 idx = lambda l: map(lambda i: mi[i], list(l))
 
 def perm(s):
@@ -11,7 +11,7 @@ def align(e, s):
     n1 = len(e); n2 = len(s)
     n = min(n1, n2); N = max(n1,n2)
     (x,y) = (e, s + '-'*(N-n)) if n1 >= n2 else (s, e + '-'*(N-n))
-    f = lambda x,y: sum(map(lambda i,j: M[i][j], idx(x), idx(y)))
+    f = lambda x,y: sum(map(lambda i,j: int(M[i][j]), idx(x), idx(y)))
     if(d==True):
         print('\n'.join(map(lambda s: str(e) + '/' + str(s) + ' -> '+ str(f(e,s)), map(lambda t: ''.join(c for c in t), perm(y)))))
     return (e,s,max(map(lambda s: f(x,s), perm(y))))
@@ -22,7 +22,7 @@ def parsef(fname):
     for l in lines:
         (id, rest) = l.split(":")
         if(id in ['A', 'C', 'G', 'T', '-']):
-            M[mi[id]] = map(lambda x: int(x), rest.split(',')) # falta el caso del *
+            M[mi[id]] = map(lambda x: x, rest.split(',')) # falta el caso del *
         elif(id == '0'):
             evidence = rest
         else:
