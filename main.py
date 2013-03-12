@@ -22,7 +22,7 @@ def parsef(fname):
     for l in lines:
         (id, rest) = l.split(":")
         if(id in ['A', 'C', 'G', 'T', '-']):
-            M[mi[id]] = map(lambda x: x, rest.split(',')) # falta el caso del *
+            M[mi[id]] = map(lambda x: x, rest.split(','))            
         elif(id == '0'):
             evidence = rest
         else:
