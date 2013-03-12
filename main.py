@@ -7,6 +7,22 @@ def perm(s):
     from itertools import permutations
     return set(filter(lambda e: s.replace('-','') == ''.join(map(str,e)).replace('-',''), permutations(s)))
 
+
+def perm(s,n):
+    if n == 1:
+        return tag(s)
+    else:
+        ll = []
+        for s in tag(s):
+            ll = ll + perm(s, n-1)
+        return ll
+
+def tag(s):
+    l = []
+    for i in range(len(s)+1):
+        l.append(s[0:i] + '-' + s[i:])
+    return l
+
 def order(x,y):
     n1 = len(x); n2 = len(y)
     n = min(n1, n2); N = max(n1,n2)
