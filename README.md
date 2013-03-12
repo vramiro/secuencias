@@ -1,15 +1,17 @@
-alineamiento de secuencias geneticas
+Desafio del mes: alineamiento de secuencias geneticas
 ========
 
-http://www.programando.org/blog/2013/03/desafio-marzo-slash-abril-adn-forense/
+Una solución de fuerza bruta para el desafio del mes de http://www.programando.org
+Más info del desafío en http://www.programando.org/blog/2013/03/desafio-marzo-slash-abril-adn-forense/
 
-Primer parametro es el archivo de datos, el segundo es debug.
+Ejemplos de ejecución
 
 <pre>
 $ python main.py datos.txt
 El culpable es el sospechoso numero 3 (AGTGATA).
 </pre>
 
+con debug
 
 <pre>
 python main.py input.txt 1
