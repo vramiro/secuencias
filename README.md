@@ -2,6 +2,7 @@ Desafio del mes: alineamiento de secuencias geneticas
 ========
 
 Una solución de fuerza bruta para el desafio del mes de http://www.programando.org
+
 Más info del desafío en http://www.programando.org/blog/2013/03/desafio-marzo-slash-abril-adn-forense/
 
 Ejemplos de ejecución
