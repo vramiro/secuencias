@@ -3,39 +3,30 @@
 mi = {'A': 0, 'C': 1, 'G': 2,'T': 3, '-': 4}
 idx = lambda l: map(lambda i: mi[i], list(l))
 
-def perm(s):
-    from itertools import permutations
-    return set(filter(lambda e: s.replace('-','') == ''.join(map(str,e)).replace('-',''), permutations(s)))
-
-
-def perm(s,n):
-    if n == 1:
-        return tag(s)
-    else:
-        ll = []
-        for s in tag(s):
-            ll = ll + perm(s, n-1)
-        return ll
-
-def tag(s):
-    l = []
-    for i in range(len(s)+1):
-        l.append(s[0:i] + '-' + s[i:])
-    return l
+def perm(x,n):
+    def recperm(s,n):
+        tag = lambda s: [s[0:i] + '-' + s[i:] for i in range(len(s)+1)]
+        if n == 0:
+            return [s]
+        if n == 1:
+            return tag(s)
+        else:
+            return reduce(lambda x,y: x+y, [recperm(s,n-1) for s in tag(s)])
+    return set(recperm(x,n))
 
 def order(x,y):
-    n1 = len(x); n2 = len(y)
-    n = min(n1, n2); N = max(n1,n2)
-    return (x, y + '-'*(N-n)) if n1 >= n2 else (y, x + '-'*(N-n))
+    n1, n2 = len(x), len(y)
+    d = max(n1,n2) - min(n1,n2)
+    return (x, y, d) if n1 >= n2 else (y, x, d)
 
 def align(e, s):
-    (x,y) = order(e,s)
+    (x,y, delta) = order(e,s)
     f = lambda x,y: sum(map(lambda i,j: int(M[i][j]), idx(x), idx(y)))
     if(d==True):
         dfmt = lambda s: str(e) + '/' + str(s) + ' -> '+ str(f(e,s))
         tuptosrt = lambda t: ''.join(c for c in t)
-        print('\n'.join(map(dfmt, map(tuptosrt, perm(y)))))
-    return (e,s,max(map(lambda s: f(x,s), perm(y))))
+        print('\n'.join(map(dfmt, map(tuptosrt, perm(y,delta)))))
+    return (e,s,max(map(lambda s: f(x,s), perm(y,delta))))
 
 def parsef(fname):
     M = [None, None, None, None, None]; suspects = {}; evidence = None

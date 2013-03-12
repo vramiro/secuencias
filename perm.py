@@ -1,5 +1,7 @@
 
 def perm(s,n):
+    if n == 0:        
+        return [s]
     if n == 1:
         return tag(s)
     else:
@@ -8,7 +10,14 @@ def perm(s,n):
 def tag(s):
     return [s[0:i] + '-' + s[i:] for i in range(len(s)+1)]
 
-ss=set(perm('ABC',4))
-print('\n'.join(sorted(ss)))
+def test(s,n):
+    aux = perm(s,n)
+    ss=set(aux)
+    print('\n'.join(sorted(ss)))
+    print('++++++++++++++++++++++')
 
+test('AB',0)
+test('AB',1)
+test('AB',2)
+test('AB',3)
 
